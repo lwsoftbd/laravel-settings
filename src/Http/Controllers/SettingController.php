@@ -12,7 +12,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::all();
-        return view('settings::index', compact('settings'));
+        return view('lw-settings::index', compact('settings'));
     }
 
     public function search(Request $request)
@@ -29,7 +29,7 @@ class SettingController extends Controller
     public function edit()
     {
         $settings = Setting::all()->groupBy('group');
-        return view('site-settings::edit', compact('settings'));
+        return view('lw-settings::edit', compact('settings'));
     }
 
     /**
@@ -75,22 +75,19 @@ class SettingController extends Controller
                 if (is_a($value, \Illuminate\Http\UploadedFile::class)) {
                     $value = $value->store('settings', 'public');
                 }
-                break;
+            break;
 
             case 'boolean':
                 $value = $value ? '1' : '0';
-                break;
+            break;
 
             case 'json':
                 $value = json_encode($value);
-                break;
+            break;
 
             case 'number':
                 $value = is_numeric($value) ? $value + 0 : null;
-                break;
-
-            default:
-                $value = $value;
+            break;
         }
 
         return $value;
@@ -98,9 +95,8 @@ class SettingController extends Controller
 
     public function create(Request $request)
     {
-        return view('site-settings::create')->with('success', 'Settings created successfully!');
+        return view('lw-settings::create')->with('success', 'Settings created successfully!');
     }
-
 
     /**
      * Store new setting
@@ -114,7 +110,7 @@ class SettingController extends Controller
                 'string',
                 'regex:/^[a-z0-9]+$/', // only lowercase letters and numbers
             ],
-            'key'   => 'required|string|unique:settings,key',
+            'key'   => 'required|string|unique:lw_settings,key',
             'type'  => 'required|in:text,image,file,boolean,json,number,date,email,url,textarea,password,color',
             'value' => 'nullable'
         ], [

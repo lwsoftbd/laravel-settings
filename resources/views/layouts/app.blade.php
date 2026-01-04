@@ -12,68 +12,67 @@
     @stack('styles')
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }} {{ setting('site_name') }}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="container-fluid bg-light">
+        <div id="main menu" class="container-md">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">{{ setting('site_name') ?? 'LW Settings' }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <!-- Get Logo from settings package -->
-            @php
-                $logo = setting_row('logo');
-            @endphp
-            @if($logo)
-                <img
-                    src="{{ asset('storage/' . $logo->value) }}"
-                    alt="{{ $logo->key }}"
-                    class="img-fluid"
-                >
-            @endif
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    @auth
-                        <li class="nav-item">
-                            <span class="nav-link">Hi, {{ auth()->user()->name }}</span>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('/dashboard') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            <a class="nav-link" href="{{ route('site.settings') }}">Site Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('site.settings.create') }}">Add New</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('settings.cache.clear.all') }}" method="POST"
+                                onsubmit="return confirm('Are you sure? This will clear all settings cache!')">
                                 @csrf
-                                <button class="btn btn-link nav-link" type="submit">Logout</button>
+                                <button type="submit" class="nav-link btn btn-link">
+                                    Clear Cache
+                                </button>
                             </form>
                         </li>
-                    @endauth
-                    @guest
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                    @endguest
-                </ul>
-            </div>
+                        <!-- User Auth -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hi, {{ auth()->user()->name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @auth
+                                    <li class="dropdown-item">
+                                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button class="nav-link" type="submit">Logout</button>
+                                        </form>
+                                    </li>
+                                @endauth
+                                @guest
+                                    <li class="dropdown-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                                @endguest
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+
+                </div>
+            </nav>
         </div>
-    </nav>
+    </div>
 
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('site.settings') }}">
-                                Site Settings
-                            </a>
-                        </li>
-                        <!-- Add more links here -->
-                    </ul>
-                </div>
-            </nav>
-
             {{-- ===== Flash Messages ===== --}}
             <div class="container mt-3">
                 @if(session('success'))
@@ -89,21 +88,8 @@
                 @endif
             </div>
 
-            <!-- Main content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-
-                <a href="{{ route('site.settings.create') }}">
-                    <button type="button" class="btn btn-primary">Add New</button>
-                </a>
-                
-                <form action="{{ route('settings.cache.clear.all') }}" method="POST"
-                    onsubmit="return confirm('Are you sure? This will clear all settings cache!')">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">
-                        Clear All Settings Cache
-                    </button>
-                </form>
-
+            <!-- Main content (full width) -->
+            <main class="col-12 px-md-4 py-4">
                 @yield('content')
             </main>
         </div>

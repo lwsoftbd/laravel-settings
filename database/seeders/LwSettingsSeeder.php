@@ -5,7 +5,7 @@ namespace LWSoftBD\LwSettings\Database\Seeders;
 use Illuminate\Database\Seeder;
 use LWSoftBD\LwSettings\Models\Setting;
 
-class DefaultSettingsSeeder extends Seeder
+class LwSettingsSeeder extends Seeder
 {
     public function run(): void
     {

@@ -2,5 +2,5 @@
 
 return [
     'cache' => true,
-    'admin_prefix' => 'admin/lw-settings',
+    'admin_prefix' => 'admin/site-settings',
 ];
