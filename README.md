@@ -19,3 +19,7 @@ Install the package via Composer:
 ```bash 
 composer require your-vendor/laravel-settings
 ```
+
+## 📄 License
+
+This package is open-sourced software licensed under the MIT License.
