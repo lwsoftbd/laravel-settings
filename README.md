@@ -17,7 +17,7 @@ This package is useful for storing dynamic settings such as site name, maintenan
 Install the package via Composer:
 
 ```bash 
-composer require your-vendor/laravel-settings
+composer require lwsoftbd/lw-settings
 ```
 
 ## 📄 License
