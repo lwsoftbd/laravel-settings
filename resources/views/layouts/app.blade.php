@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }} - @yield('title', 'Dashboard')</title>
-    
+
     <!-- Bootstrap CSS (cdn) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @if((bool) setting('default_layout'))
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @endif
 
     <!-- Optional custom CSS -->
     @stack('styles')
@@ -47,6 +49,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @auth
+                                    <li class="dropdown-item"><a class="nav-link" href="{{ route('site-settings.preference') }}">Preference</a></li>
                                     <li class="dropdown-item">
                                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                             @csrf
@@ -101,7 +104,10 @@
     </footer>
 
     <!-- Bootstrap JS (cdn) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @if((bool) setting('default_layout'))
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @endif
+
     @stack('scripts')
 </body>
 </html>

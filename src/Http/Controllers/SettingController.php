@@ -9,6 +9,11 @@ use LWSoftBD\LwSettings\Models\Setting;
 
 class SettingController extends Controller
 {
+    public function preference()
+    {
+        return view('lw-settings::preference');
+    }
+
     public function index()
     {
         $settings = Setting::all();
@@ -150,6 +155,21 @@ class SettingController extends Controller
         setting_forget_all();
 
         return back()->with('success', 'All settings cache cleared successfully');
+    }
+
+    public function togglePackageLayout(Request $request)
+    {
+        $setting = Setting::firstOrCreate(
+            ['key' => 'default_layout'],
+            ['value' => 1, 'type' => 'boolean']
+        );
+
+        $setting->value = $setting->value == 1 ? 0 : 1;
+        $setting->save();
+
+        setting_forget('default_layout');
+
+        return back()->with('success', 'Layout updated successfully');
     }
 
 }

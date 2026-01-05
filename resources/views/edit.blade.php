@@ -1,4 +1,4 @@
-@extends('site-settings::layouts.app')
+@extends('lw-settings::layouts.app')
 
 @section('title', 'Site Settings')
 

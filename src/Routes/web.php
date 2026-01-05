@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use LWSoftBD\LwSettings\Http\Controllers\SettingController;
 
 Route::middleware(['web', 'auth'])
-    ->prefix('admin/site-settings')
+    ->prefix('site-settings')
     ->group(function () {
         Route::get('/', [SettingController::class, 'index'])
             ->name('site.settings');
@@ -18,6 +18,13 @@ Route::middleware(['web', 'auth'])
             ->name('site.settings.create');
         Route::post('/create', [SettingController::class, 'store'])
             ->name('site.settings.store');
+
+        Route::get('/preference', [SettingController::class, 'preference'])
+            ->name('site-settings.preference');
+
+        Route::post('/layout-toggle', [SettingController::class, 'togglePackageLayout'])
+            ->name('site-settings.package-layout-toggle');
+
         Route::post('/cache-clear/{key}', [SettingController::class, 'clearCache'])
             ->name('settings.cache.clear');
         Route::post('cache-clear-all', [SettingController::class, 'clearAllCache'])

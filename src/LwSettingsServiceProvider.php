@@ -2,6 +2,7 @@
 
 namespace LWSoftBD\LwSettings;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class LwSettingsServiceProvider extends ServiceProvider
@@ -32,6 +33,7 @@ class LwSettingsServiceProvider extends ServiceProvider
             __DIR__ . '/../database/seeders/LwSettingsSeeder.php' => database_path('seeders/LwSettingsSeeder.php'),
         ], ['lw-settings-seeder', 'lw-settings-all']);
 
+        View::share('documentation', 'http://lwsoftbd.com');
     }
 
     public function register()
