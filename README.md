@@ -8,6 +8,7 @@ This package is useful for storing dynamic settings such as site name, maintenan
 
 - Store application settings in the database
 - Easy helper methods
+- Use anywhere on the blade file
 - Supports caching for better performance
 - Clean and simple
 - Laravel-friendly and easy to integrate
